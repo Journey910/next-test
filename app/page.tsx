@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { useState } from "react";
 
@@ -36,7 +36,12 @@ export default function Home() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "요청 중 오류가 발생했습니다.");
+        // 6) 서버가 내려준 error 메시지를 그대로 화면에 노출
+        const serverError =
+          (data && typeof data.error === "string" && data.error) ||
+          "요청 중 오류가 발생했습니다.";
+        setError(serverError);
+        return;
       }
 
       const reply =
@@ -50,9 +55,8 @@ export default function Home() {
       ]);
     } catch (err: any) {
       console.error(err);
-      setError(
-        err?.message || "챗봇 답변을 가져오는 중 오류가 발생했습니다."
-      );
+      // 네트워크 오류 등 예외적인 경우에만 여기로 들어옵니다.
+      setError("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setIsLoading(false);
     }
@@ -225,16 +229,14 @@ export default function Home() {
                 {messages.map((m, idx) => (
                   <div
                     key={idx}
-                    className={`flex ${
-                      m.role === "user" ? "justify-end" : "justify-start"
-                    }`}
+                    className={`flex ${m.role === "user" ? "justify-end" : "justify-start"
+                      }`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-3 py-2 sm:px-4 sm:py-3 ${
-                        m.role === "user"
-                          ? "bg-indigo-500 text-white"
-                          : "bg-slate-800 text-slate-100"
-                      }`}
+                      className={`max-w-[80%] rounded-2xl px-3 py-2 sm:px-4 sm:py-3 ${m.role === "user"
+                        ? "bg-indigo-500 text-white"
+                        : "bg-slate-800 text-slate-100"
+                        }`}
                     >
                       {m.content}
                     </div>
