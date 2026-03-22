@@ -73,19 +73,19 @@ export default function Home() {
             <h1 className="mb-6 text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
               안녕하세요.
               <br />
-              포트폴리오와 챗봇 데모를 만드는 중입니다.
+              IT 보안 전문가를 꿈꾸는 김지현입니다.
             </h1>
             <p className="mb-8 max-w-xl text-sm leading-7 text-slate-300 sm:text-base md:text-lg">
-              Next.js와 Cursor를 활용해 웹사이트를 만들고 있습니다.
-              깔끔한 포트폴리오 화면과 챗봇 UI를 함께 구성한 데모 페이지입니다.
+              AWS 기반 인프라와 보안 구조에 관심을 가지고 공부하고 있습니다.
+              네트워크, 리눅스, 시스템 구조를 이해하며 안전하고 효율적인 환경을 만드는 것을 목표로 합니다.
             </p>
 
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <button className="rounded-xl bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-400 sm:px-5 sm:py-3">
-                프로젝트 보기
+                프로젝트 확인
               </button>
               <button className="rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-slate-800 sm:px-5 sm:py-3">
-                연락하기
+                이메일 문의
               </button>
             </div>
           </div>
@@ -98,9 +98,6 @@ export default function Home() {
                   포트폴리오 안에 들어가는 미니 챗봇 UI
                 </p>
               </div>
-              <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-medium text-emerald-400">
-                Demo
-              </span>
             </div>
 
             <div className="space-y-3 rounded-2xl bg-slate-950 p-3 sm:space-y-4 sm:p-4">
