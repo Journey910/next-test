@@ -6,7 +6,7 @@ import path from "path";
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
 const ai = new GoogleGenAI({});
 
-export async function POST(req: NextRequest) 
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const message = body?.message as string | undefined;
