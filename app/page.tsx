@@ -93,9 +93,9 @@ export default function Home() {
           <div className="rounded-3xl border border-slate-800 bg-slate-900 p-4 shadow-2xl sm:p-6">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-semibold sm:text-xl">챗봇 데모</h2>
+                <h2 className="text-lg font-semibold sm:text-xl">포트폴리오 챗봇</h2>
                 <p className="text-xs text-slate-400 sm:text-sm">
-                  포트폴리오 안에 들어가는 미니 챗봇 UI
+                제 프로젝트, 기술 스택, 학습 내용에 대해 답변하는 챗봇입니다.
                 </p>
               </div>
             </div>
@@ -106,13 +106,13 @@ export default function Home() {
                   AI
                 </div>
                 <div className="max-w-[80%] rounded-2xl bg-slate-800 px-3 py-2 text-xs leading-5 text-slate-100 sm:px-4 sm:py-3 sm:text-sm sm:leading-6">
-                  안녕하세요. 포트폴리오 안에 들어갈 챗봇 데모 화면입니다.
+                안녕하세요. 포트폴리오 방문을 환영합니다. 궁금한 내용을 질문해보세요.
                 </div>
               </div>
 
               <div className="flex justify-end">
                 <div className="max-w-[80%] rounded-2xl bg-indigo-500 px-3 py-2 text-xs leading-5 text-white sm:px-4 sm:py-3 sm:text-sm sm:leading-6">
-                  이 화면을 더 세련되게 만들 수 있나요?
+                어떤 기술을 사용했나요?
                 </div>
               </div>
 
@@ -121,7 +121,7 @@ export default function Home() {
                   AI
                 </div>
                 <div className="max-w-[80%] rounded-2xl bg-slate-800 px-3 py-2 text-xs leading-5 text-slate-100 sm:px-4 sm:py-3 sm:text-sm sm:leading-6">
-                  네. 말풍선, 입력창, 버튼, 여백과 색감을 다듬으면 더 제품처럼 보이게 만들 수 있습니다.
+                Next.js, React, Vercel, Gemini API를 활용해 포트폴리오와 챗봇 기능을 구현했습니다.
                 </div>
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function Home() {
             <div className="mt-4 flex gap-3">
               <input
                 type="text"
-                placeholder="메시지를 입력하세요"
+                placeholder="사용한 기술 스택은 무엇인가요?"
                 className="flex-1 rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-xs text-white outline-none placeholder:text-slate-500 sm:px-4 sm:py-3 sm:text-sm"
               />
               <button className="rounded-xl bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-400 sm:px-5 sm:py-3">
