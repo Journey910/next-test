@@ -95,10 +95,14 @@ export default function Home() {
           <p className="mb-5 inline-flex items-center rounded-full border border-slate-200/90 bg-white/90 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm backdrop-blur-sm sm:text-xs">
             Personal Portfolio
           </p>
-          <h1 className="mx-auto text-balance text-2xl font-bold leading-snug tracking-tight text-slate-900 sm:text-3xl md:text-4xl lg:text-[2.35rem] lg:leading-tight">
-            안녕하세요, 꾸준히 배우고 성장하는
-            <br className="hidden sm:block" />
-            <span className="text-violet-700"> 개발 지망형 인재</span>입니다
+          <h1 className="mx-auto max-w-4xl text-balance text-2xl font-bold leading-snug tracking-tight text-slate-900 sm:text-3xl md:text-4xl lg:leading-tight">
+            <span className="block">
+              안녕하세요,{" "}
+              <span className="text-violet-700">클라우드 엔지니어</span>를
+            </span>
+            <span className="mt-1 block sm:mt-2">
+              목표로 꾸준히 성장하고 있습니다.
+            </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg">
             실무 경험을 바탕으로 문제를 정리하고, 웹 기술과 AI 프로젝트를 직접
