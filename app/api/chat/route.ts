@@ -4,9 +4,6 @@ import fs from "fs";
 import path from "path";
 import clientPromise from "@/lib/mongodb";
 
-// The client gets the API key from the environment variable `GEMINI_API_KEY`.
-const ai = new GoogleGenAI({});
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -19,13 +16,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
       console.error("GEMINI_API_KEY is not set");
       return NextResponse.json(
         { error: "서버 환경 변수 GEMINI_API_KEY가 설정되지 않았습니다." },
         { status: 500 }
       );
     }
+
+    const ai = new GoogleGenAI({ apiKey });
 
     const resumePath = path.join(process.cwd(), "data", "resume.txt");
     const resumeText = fs.readFileSync(resumePath, "utf-8");
@@ -50,7 +50,7 @@ ${message.trim()}
 
     try {
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.0-flash",
         contents: prompt,
       });
 
@@ -63,15 +63,20 @@ ${message.trim()}
         );
       }
 
-      // MongoDB 저장
-      const client = await clientPromise;
-      const db = client.db(process.env.MONGODB_DB || "portfolio_chatbot");
-
-      await db.collection("chat_logs").insertOne({
-        userMessage: message.trim(),
-        assistantMessage: reply,
-        createdAt: new Date(),
-      });
+      try {
+        const client = await clientPromise;
+        const db = client.db(process.env.MONGODB_DB || "portfolio_chatbot");
+        await db.collection("chat_logs").insertOne({
+          userMessage: message.trim(),
+          assistantMessage: reply,
+          createdAt: new Date(),
+        });
+      } catch (dbError) {
+        console.error(
+          "[chat_logs] MongoDB 저장 실패 — 답변은 그대로 반환합니다.",
+          dbError
+        );
+      }
 
       return NextResponse.json({ reply });
     } catch (genAiError: any) {
