@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import fs from "fs";
 import path from "path";
+import clientPromise from "@/lib/mongodb";
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
 const ai = new GoogleGenAI({});
@@ -26,11 +27,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // resume.txt 파일 읽기
     const resumePath = path.join(process.cwd(), "data", "resume.txt");
     const resumeText = fs.readFileSync(resumePath, "utf-8");
 
-    // Gemini에 보낼 프롬프트 만들기
     const prompt = `
 너는 사용자의 포트폴리오 챗봇이다.
 
@@ -63,6 +62,16 @@ ${message.trim()}
           { status: 500 }
         );
       }
+
+      // MongoDB 저장
+      const client = await clientPromise;
+      const db = client.db(process.env.MONGODB_DB || "portfolio_chatbot");
+
+      await db.collection("chat_logs").insertOne({
+        userMessage: message.trim(),
+        assistantMessage: reply,
+        createdAt: new Date(),
+      });
 
       return NextResponse.json({ reply });
     } catch (genAiError: any) {
