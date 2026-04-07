@@ -227,6 +227,108 @@ export default function Home() {
           </article>
         </div>
 
+        <section
+          id="resume-qa"
+          className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white to-violet-50/40 px-6 py-8 shadow-sm sm:px-10 sm:py-10"
+          aria-labelledby="resume-qa-heading"
+        >
+          <div className="mx-auto max-w-3xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-600 sm:text-xs">
+              Portfolio Q&A Chatbot
+            </p>
+            <h2
+              id="resume-qa-heading"
+              className="mt-2 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl"
+            >
+              Ask About Me
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+              제 포트폴리오를 더 빠르게 둘러볼 수 있도록 준비한 Q&A
+              공간입니다. 경력, 실무 경험, 기술 스택, 프로젝트, 성장 과정에 대해
+              궁금한 점을 질문해 보세요.
+            </p>
+
+            <div className="mt-6 rounded-2xl border border-slate-100 bg-white/90 p-4 sm:p-5">
+              <p className="text-xs font-medium text-slate-500 sm:text-sm">
+                이렇게 물어보셔도 좋아요
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {portfolioExampleQuestions.map((q) => (
+                  <li key={q}>
+                    <button
+                      type="button"
+                      onClick={() => setInput(q)}
+                      className="inline-flex items-center rounded-full border border-violet-100 bg-violet-50/50 px-3 py-1.5 text-[13px] text-violet-700 transition hover:bg-violet-100 hover:text-violet-900"
+                    >
+                      {q}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5">
+              <div className="flex max-h-[200px] min-h-[60px] flex-col space-y-4 overflow-y-auto pr-2 text-sm leading-relaxed sm:min-h-[80px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-200">
+                {messages.map((m, idx) => (
+                  <div
+                    key={idx}
+                    className={
+                      m.role === "user"
+                        ? "rounded-xl border border-violet-100 bg-violet-50/50 px-4 py-3"
+                        : "rounded-xl border border-slate-100 bg-slate-50/60 px-4 py-3"
+                    }
+                  >
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                      {m.role === "user" ? "질문" : "답변"}
+                    </p>
+                    <p
+                      className={`mt-1.5 whitespace-pre-wrap text-[15px] leading-relaxed ${m.role === "user" ? "text-slate-800" : "text-slate-700"}`}
+                    >
+                      {m.content}
+                    </p>
+                  </div>
+                ))}
+                {isLoading && (
+                  <p className="text-sm text-slate-500">답변을 준비하고 있어요…</p>
+                )}
+                {error && (
+                  <p className="rounded-xl border border-red-100 bg-red-50/80 px-4 py-3 text-sm text-red-800">
+                    {error}
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-end">
+                <label className="sr-only" htmlFor="resume-question">
+                  질문 입력
+                </label>
+                <textarea
+                  id="resume-question"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
+                  rows={1}
+                  placeholder="궁금한 점을 편하게 질문해 보세요."
+                  className="max-h-[100px] min-h-[2.5rem] w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:ring-2 focus:ring-violet-500/15"
+                />
+                <button
+                  type="button"
+                  onClick={handleSend}
+                  disabled={isLoading || !input.trim()}
+                  className="inline-flex min-w-[5.5rem] shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:from-slate-300 disabled:to-slate-300 disabled:shadow-none sm:self-end"
+                >
+                  {isLoading ? "…" : "Ask"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <article
           id="projects"
           className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm sm:p-10 lg:p-12"
@@ -264,109 +366,6 @@ export default function Home() {
             </div>
           </div>
         </article>
-
-        <section
-          id="resume-qa"
-          className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white to-violet-50/40 px-6 py-10 shadow-sm sm:px-10 sm:py-12"
-          aria-labelledby="resume-qa-heading"
-        >
-          <div className="mx-auto max-w-3xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-600 sm:text-xs">
-              Portfolio Q&A Chatbot
-            </p>
-            <h2
-              id="resume-qa-heading"
-              className="mt-2 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl"
-            >
-              Ask About Me
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-              제 포트폴리오를 더 빠르게 둘러볼 수 있도록 준비한 Q&A
-              공간입니다. 경력, 실무 경험, 기술 스택, 프로젝트, 성장 과정에 대해
-              궁금한 점을 질문해 보세요.
-            </p>
-
-            <div className="mt-6 rounded-2xl border border-slate-100 bg-white/90 p-4 sm:p-5">
-              <p className="text-xs font-medium text-slate-500 sm:text-sm">
-                이렇게 물어보셔도 좋아요
-              </p>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-1 sm:gap-2.5">
-                {portfolioExampleQuestions.map((q) => (
-                  <li
-                    key={q}
-                    className="flex gap-2 text-sm leading-snug text-slate-700"
-                  >
-                    <span
-                      className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-violet-400"
-                      aria-hidden
-                    />
-                    <span>{q}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-8 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm sm:p-6">
-              <div className="min-h-[120px] space-y-5 text-sm leading-relaxed sm:min-h-[140px]">
-                {messages.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className={
-                      m.role === "user"
-                        ? "rounded-xl border border-violet-100 bg-violet-50/50 px-4 py-3"
-                        : "rounded-xl border border-slate-100 bg-slate-50/60 px-4 py-3"
-                    }
-                  >
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                      {m.role === "user" ? "질문" : "답변"}
-                    </p>
-                    <p
-                      className={`mt-1.5 whitespace-pre-wrap text-[15px] leading-relaxed ${m.role === "user" ? "text-slate-800" : "text-slate-700"}`}
-                    >
-                      {m.content}
-                    </p>
-                  </div>
-                ))}
-                {isLoading && (
-                  <p className="text-sm text-slate-500">답변을 준비하고 있어요…</p>
-                )}
-                {error && (
-                  <p className="rounded-xl border border-red-100 bg-red-50/80 px-4 py-3 text-sm text-red-800">
-                    {error}
-                  </p>
-                )}
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-stretch">
-                <label className="sr-only" htmlFor="resume-question">
-                  질문 입력
-                </label>
-                <textarea
-                  id="resume-question"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSend();
-                    }
-                  }}
-                  rows={2}
-                  placeholder="궁금한 질문을 입력해 주세요. 예: 어떤 경험과 강점을 가지고 있나요?"
-                  className="min-h-[4.5rem] w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:ring-2 focus:ring-violet-500/15"
-                />
-                <button
-                  type="button"
-                  onClick={handleSend}
-                  disabled={isLoading || !input.trim()}
-                  className="inline-flex min-w-[5.5rem] shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:from-slate-300 disabled:to-slate-300 disabled:shadow-none sm:self-end"
-                >
-                  {isLoading ? "…" : "Ask"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
 
       <footer className="border-t border-slate-200/90 bg-white/80 py-8 text-center text-xs text-slate-500 sm:text-sm">
