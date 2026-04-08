@@ -23,6 +23,7 @@ const portfolioExampleQuestions = [
 ];
 
 export default function Home() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<
     { role: "user" | "assistant"; content: string }[]
@@ -105,8 +106,8 @@ export default function Home() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg">
-            실무 경험을 바탕으로 문제를 정리하고, 웹 기술과 AI 프로젝트를 직접
-            구현하며 역량을 키우고 있습니다.
+            실무 경험을 바탕으로 문제를 정리하고, 웹 기술과 AI 프로젝트를 직접 구현하며<br />
+            역량을 키우고 있습니다.
           </p>
         </header>
 
@@ -227,107 +228,7 @@ export default function Home() {
           </article>
         </div>
 
-        <section
-          id="resume-qa"
-          className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white to-violet-50/40 px-6 py-8 shadow-sm sm:px-10 sm:py-10"
-          aria-labelledby="resume-qa-heading"
-        >
-          <div className="mx-auto max-w-3xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-600 sm:text-xs">
-              Portfolio Q&A Chatbot
-            </p>
-            <h2
-              id="resume-qa-heading"
-              className="mt-2 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl"
-            >
-              Ask About Me
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-              제 포트폴리오를 더 빠르게 둘러볼 수 있도록 준비한 Q&A
-              공간입니다. 경력, 실무 경험, 기술 스택, 프로젝트, 성장 과정에 대해
-              궁금한 점을 질문해 보세요.
-            </p>
-
-            <div className="mt-6 rounded-2xl border border-slate-100 bg-white/90 p-4 sm:p-5">
-              <p className="text-xs font-medium text-slate-500 sm:text-sm">
-                이렇게 물어보셔도 좋아요
-              </p>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {portfolioExampleQuestions.map((q) => (
-                  <li key={q}>
-                    <button
-                      type="button"
-                      onClick={() => setInput(q)}
-                      className="inline-flex items-center rounded-full border border-violet-100 bg-violet-50/50 px-3 py-1.5 text-[13px] text-violet-700 transition hover:bg-violet-100 hover:text-violet-900"
-                    >
-                      {q}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5">
-              <div className="flex max-h-[200px] min-h-[60px] flex-col space-y-4 overflow-y-auto pr-2 text-sm leading-relaxed sm:min-h-[80px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-200">
-                {messages.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className={
-                      m.role === "user"
-                        ? "rounded-xl border border-violet-100 bg-violet-50/50 px-4 py-3"
-                        : "rounded-xl border border-slate-100 bg-slate-50/60 px-4 py-3"
-                    }
-                  >
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                      {m.role === "user" ? "질문" : "답변"}
-                    </p>
-                    <p
-                      className={`mt-1.5 whitespace-pre-wrap text-[15px] leading-relaxed ${m.role === "user" ? "text-slate-800" : "text-slate-700"}`}
-                    >
-                      {m.content}
-                    </p>
-                  </div>
-                ))}
-                {isLoading && (
-                  <p className="text-sm text-slate-500">답변을 준비하고 있어요…</p>
-                )}
-                {error && (
-                  <p className="rounded-xl border border-red-100 bg-red-50/80 px-4 py-3 text-sm text-red-800">
-                    {error}
-                  </p>
-                )}
-              </div>
-
-              <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-end">
-                <label className="sr-only" htmlFor="resume-question">
-                  질문 입력
-                </label>
-                <textarea
-                  id="resume-question"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSend();
-                    }
-                  }}
-                  rows={1}
-                  placeholder="궁금한 점을 편하게 질문해 보세요."
-                  className="max-h-[100px] min-h-[2.5rem] w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:ring-2 focus:ring-violet-500/15"
-                />
-                <button
-                  type="button"
-                  onClick={handleSend}
-                  disabled={isLoading || !input.trim()}
-                  className="inline-flex min-w-[5.5rem] shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:from-slate-300 disabled:to-slate-300 disabled:shadow-none sm:self-end"
-                >
-                  {isLoading ? "…" : "Ask"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Removed static resume-qa section */}
 
         <article
           id="projects"
@@ -371,6 +272,128 @@ export default function Home() {
       <footer className="border-t border-slate-200/90 bg-white/80 py-8 text-center text-xs text-slate-500 sm:text-sm">
         <p>© {new Date().getFullYear()} 김지현 · 개인 포트폴리오</p>
       </footer>
+
+      {/* Floating Chat Widget */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        {/* Chat Window */}
+        {isChatOpen && (
+          <div className="mb-4 flex w-[90vw] max-w-[360px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:max-w-sm h-[500px] max-h-[75vh] animate-[slideUp_0.2s_ease-out]">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-4 py-3">
+              <div>
+                <h3 className="text-sm font-semibold text-slate-900">Ask About Me</h3>
+                <p className="text-[11px] text-slate-500">포트폴리오 Q&A</p>
+              </div>
+              <button
+                onClick={() => setIsChatOpen(false)}
+                className="rounded-full p-1.5 text-slate-400 transition hover:bg-slate-200 hover:text-slate-600"
+                aria-label="닫기"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-200">
+              {messages.length === 0 && (
+                <div className="space-y-3">
+                  <p className="text-xs text-slate-500">추천 질문:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {portfolioExampleQuestions.map((q) => (
+                      <button
+                        key={q}
+                        type="button"
+                        onClick={() => setInput(q)}
+                        className="inline-flex rounded-full border border-violet-100 bg-violet-50/50 px-2.5 py-1 text-[11px] text-violet-700 transition hover:bg-violet-100 hover:text-violet-900 text-left"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {messages.map((m, idx) => (
+                <div
+                  key={idx}
+                  className={
+                    m.role === "user"
+                      ? "rounded-xl rounded-tr-sm bg-violet-500 px-3 py-2 text-[13px] text-white ml-6 break-words"
+                      : "rounded-xl rounded-tl-sm bg-slate-100 px-3 py-2 text-[13px] text-slate-800 mr-6 break-words"
+                  }
+                >
+                  <p className="whitespace-pre-wrap">{m.content}</p>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="rounded-xl rounded-tl-sm bg-slate-100 px-3 py-2 text-[13px] text-slate-500 mr-6 w-fit">
+                  답변 작성 중...
+                </div>
+              )}
+              {error && (
+                <div className="rounded-xl bg-red-50 px-3 py-2 text-[13px] text-red-600">
+                  {error}
+                </div>
+              )}
+            </div>
+
+            {/* Input Form */}
+            <div className="border-t border-slate-100 p-3 bg-white">
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
+                  disabled={isLoading}
+                  placeholder="궁금한 점을 물어보세요..."
+                  className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-[13px] text-slate-800 outline-none transition focus:border-violet-300 focus:bg-white"
+                />
+                <button
+                  onClick={handleSend}
+                  disabled={isLoading || !input.trim()}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white transition hover:bg-violet-700 disabled:bg-slate-300"
+                  aria-label="전송"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Floating Button */}
+        <div className="flex items-center gap-3">
+          {!isChatOpen && (
+            <div className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all">
+              Ask me!
+            </div>
+          )}
+          <button
+            onClick={() => setIsChatOpen(!isChatOpen)}
+            className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-600 font-bold text-white shadow-xl transition-transform hover:scale-105 hover:bg-violet-700 active:scale-95"
+            aria-label="채팅창 열기/닫기"
+          >
+            {isChatOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
     </main>
   );
 }
