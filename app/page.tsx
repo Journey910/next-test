@@ -128,33 +128,21 @@ export default function Home() {
             >
               기술 스택 보기
             </a>
-            <a
-              href="#contact"
-              className="inline-flex rounded-2xl border border-transparent px-6 py-3 text-sm font-semibold text-violet-700 underline-offset-4 transition hover:underline"
-            >
-              연락하기
-            </a>
           </nav>
-          <div
-            id="contact"
-            className="scroll-mt-24 flex w-full justify-center lg:justify-end"
-          >
-            <div className="shrink-0 rounded-xl border border-slate-200/90 bg-white px-4 py-3 shadow-sm sm:max-w-xs sm:px-4 sm:py-3.5">
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-violet-600">
-                  Contact
-                </span>
-                <span className="text-xs font-semibold text-slate-800">
-                  연락처
-                </span>
-              </div>
-              <a
-                href="mailto:subinyouae@naver.com"
-                className="mt-1.5 block break-all text-xs font-medium text-violet-700 underline-offset-2 transition hover:underline"
-              >
-                subinyouae@naver.com
-              </a>
-            </div>
+          
+          <div className="mt-8 flex flex-col items-center justify-center">
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="group relative inline-flex items-center justify-center gap-2.5 rounded-full bg-violet-600 px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-violet-700 hover:shadow-violet-500/30 focus:outline-none focus:ring-4 focus:ring-violet-500/30"
+            >
+              <svg className="h-5 w-5 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              <span>챗봇으로 저에 대해 물어보세요</span>
+            </button>
+            <p className="mt-3 text-xs sm:text-sm font-medium text-slate-500">
+              기술 스택, 프로젝트, 학습 과정 등을 질문해보세요
+            </p>
           </div>
         </div>
 
@@ -273,11 +261,18 @@ export default function Home() {
         <p>© {new Date().getFullYear()} 김지현 · 개인 포트폴리오</p>
       </footer>
 
+      {/* Dim Overlay when chat is open */}
+      <div 
+        className={`fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm transition-all duration-300 ${isChatOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+        onClick={() => setIsChatOpen(false)}
+        aria-hidden="true"
+      />
+
       {/* Floating Chat Widget */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end sm:bottom-6 sm:right-6">
         {/* Chat Window */}
         {isChatOpen && (
-          <div className="mb-4 flex w-[90vw] max-w-[360px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:max-w-sm h-[500px] max-h-[75vh] animate-[slideUp_0.2s_ease-out]">
+          <div className="mb-4 flex w-[calc(100vw-2rem)] max-w-[380px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:w-[380px] h-[500px] max-h-[calc(100vh-8rem)] sm:max-h-[75vh] animate-[slideUp_0.2s_ease-out] origin-bottom-right">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-4 py-3">
               <div>
